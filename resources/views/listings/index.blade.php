@@ -17,4 +17,7 @@
 <p>No Listings FOund</p> 
 @endunless
 </div>
+  <div class="mt-6 p-4">
+    {{ $collection->links() }}
+  </div>
 </x-layout>

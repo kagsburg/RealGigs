@@ -13,7 +13,7 @@
             >
                 <img
                     class="w-48 mr-6 mb-6"
-                    src="{{asset('images/laravel-logo.png')}}"
+                    src="{{$listing->logo ?asset('storage/'.$listing->logo) : asset('images/laravel-logo.png')}}"
                     alt=""
                 />
 
@@ -49,6 +49,26 @@
                 </div>
             </div>
     </x-card>
+    {{-- show if logged in user is owner --}}
+    @auth
+    @if(auth()->user()->id == $listing->user_id)
+    <x-card class="mt-4 p-2 flex space-x-6">
+        <a href="/listings/{{$listing->id}}/edit">
+            <i class="fa-solid fa-edit"></i> Edit
+        </a>
+
+        <form action="/listings/{{$listing->id}}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="text-red-500 ">
+                <i class="fa-solid fa-trash"></i> Delete
+            </button>
+        </form>
+
+    </x-card>
+    @endif
+    @endauth
+    {{-- show if logged in user is owner --}}
     </div>
 </x-layout>
 {{-- @endsection --}}
